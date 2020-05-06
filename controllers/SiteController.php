@@ -165,7 +165,7 @@ class SiteController extends Controller
         $searchModel = new PaymentSearchForm();
         $request = Yii::$app->request->post();
         if ($searchModel->load($request)) {
-            $query = Suplist::find();
+            $query = SupList::find();
             if ($searchModel->firstName) $query->where(['like', 'firstName', "$searchModel->firstName"]);
             if ($searchModel->lastName) $query->orWhere(['like', 'lastName', "$searchModel->lastName"]);
             if ($searchModel->fatherName) $query->orWhere(['like', 'fatherName', "$searchModel->fatherName"]);

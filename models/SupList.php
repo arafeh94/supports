@@ -41,7 +41,7 @@ use Yii;
  *
  *
  */
-class Suplist extends \yii\db\ActiveRecord
+class SupList extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

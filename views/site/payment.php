@@ -14,7 +14,7 @@ $form = \yii\bootstrap\ActiveForm::begin([
     ],
 ]);
 
-$all = \app\models\Suplist::find()->all();
+$all = \app\models\SupList::find()->all();
 $selected = null;
 if (Yii::$app->request->get('supportId')) {
     $selected = Yii::$app->request->get('supportId');

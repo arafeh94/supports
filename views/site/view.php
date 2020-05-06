@@ -23,10 +23,6 @@ $this->title = 'الطلبات';
         direction: rtl;
     }
 
-    .sr-only {
-        all: initial;
-    }
-
     .sb-button {
         height: 100%;
     }
@@ -60,10 +56,10 @@ $this->title = 'الطلبات';
             'template' => "{label}{error}\n{beginWrapper}\n{input}\n{hint}\n{endWrapper}",
         ],
     ]); ?>
-    <?= $form->field($search, 'firstName')->label('الاسم') ?>
-    <?= $form->field($search, 'lastName')->label('اسم العائلة') ?>
-    <?= $form->field($search, 'fatherName')->label('اسم الأب') ?>
-    <?= $form->field($search, 'idNumber')->label('رقم السجل') ?>
+    <?= $form->field($search, 'firstName')->input('text', ['placeholder' => 'الاسم']) ?>
+    <?= $form->field($search, 'lastName')->input('text', ['placeholder' => 'اسم العائلة']) ?>
+    <?= $form->field($search, 'fatherName')->input('text', ['placeholder' => 'اسم الأب']) ?>
+    <?= $form->field($search, 'idNumber')->input('text', ['placeholder' => 'رقم السجل']) ?>
     <br>
     <div class="form-group">
         <div class="sb-button">

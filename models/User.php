@@ -4,8 +4,17 @@ namespace app\models;
 
 use app\components\rbac\RbacInterface;
 use Yii;
+use yii\db\ActiveRecord;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacInterface
+
+/**
+ * This is the model class for table "user".
+ *
+ * @property int $id
+ * @property string $username
+ * @property string $password
+ */
+class User extends ActiveRecord implements \yii\web\IdentityInterface, RbacInterface
 {
     /**
      * @return User
@@ -16,28 +25,25 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacIn
         return Yii::$app->user->identity;
     }
 
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'user';
+    }
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            ['id', 'safe'],
+            [['username', 'password'], 'string'],
+        ];
+    }
 
 
     /**
@@ -45,7 +51,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacIn
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return self::findOne($id);
     }
 
     /**
@@ -53,12 +59,6 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacIn
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
         return null;
     }
 
@@ -66,17 +66,11 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacIn
      * Finds user by username
      *
      * @param string $username
-     * @return static|null
+     * @return array|ActiveRecord
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return self::find()->where(['username' => $username])->one();
     }
 
     /**
@@ -92,7 +86,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacIn
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return "";
     }
 
     /**
@@ -100,7 +94,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacIn
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return true;
     }
 
     /**
@@ -119,6 +113,6 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface,RbacIn
      */
     function getRole()
     {
-        return "admin"
+        return "admin";
     }
 }

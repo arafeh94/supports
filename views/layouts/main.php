@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -35,24 +36,38 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
+
+    $items = [];
+    if (Yii::$app->user->isGuest) {
+        $items = [
+            ['label' => 'تسجيل الدخول', 'url' => ['/site/login']],
+            ['label' => 'طلب جديد', 'url' => ['/site/new']],
+            ['label' => 'حالة الطلب', 'url' => ['/site/status']],
+            ['label' => 'الصفحة الرئيسية', 'url' => ['/site/index']],
+        ];
+    } else {
+        $items = [
+            (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'تسجيل خروج (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
                 . '</li>'
-            )
-        ],
+            ),
+            ['label' => 'طلب جديد', 'url' => ['/site/new']],
+            ['label' => 'حالة الطلب', 'url' => ['/site/status']],
+            ['label' => 'دفعة جديدة', 'url' => ['/site/payment']],
+            ['label' => 'الطلبات', 'url' => ['/site/view']],
+            ['label' => 'الصفحة الرئيسية', 'url' => ['/site/index']],
+        ];
+    }
+
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'items' => $items
     ]);
     NavBar::end();
     ?>

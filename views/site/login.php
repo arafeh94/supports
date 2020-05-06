@@ -32,7 +32,7 @@ $this->title = 'تسجيل الدخول';
 
     <div class="form-group" style="text-align: center">
         <div class="col-lg-offset-1 col-lg-11">
-            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <?= Html::submitButton('أدخل', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
         </div>
     </div>
 

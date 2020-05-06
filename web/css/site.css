@@ -119,3 +119,24 @@ a.desc:after {
     padding-right: 8px;
     padding-left: 8px;
 }
+
+.navbar-inverse .navbar-nav > li {
+    font-size: 1.5em !important;
+}
+
+.navbar-inverse .navbar-brand {
+    font-size: 1.5em !important;
+}
+
+label {
+    font-size: 20px;
+    word-wrap: break-word;
+}
+
+.btn {
+    font-size: 1.5em !important;
+}
+
+.nav > li > form > button.logout {
+    font-size: 14px !important;
+}

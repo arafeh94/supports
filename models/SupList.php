@@ -33,6 +33,13 @@ use Yii;
  * @property string $sickConditions
  * @property string $workValue
  * @property string $birth
+ * @property string $idType
+ * @property string $currency
+ * @property string $governorate
+ * @property string $idSejel
+ *
+ *
+ *
  */
 class Suplist extends \yii\db\ActiveRecord
 {
@@ -50,10 +57,10 @@ class Suplist extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['firstName', 'lastName', 'fatherName', 'phone', 'city', 'birth', 'address', 'maritalStatus', 'motherName', 'fixNumber', 'idLoc', 'gender', 'familyHeadScLevel', 'workType', 'sickConditions', 'idNumber', 'familyCount', 'countLess5', 'countLess18', 'countMore64', 'countMore75', 'countSick'], 'required', 'message' => 'هذه الخانة إجبارية'],
+            [['firstName', 'lastName', 'fatherName', 'phone', 'city', 'birth', 'address', 'maritalStatus', 'motherName', 'fixNumber', 'idLoc', 'gender', 'familyHeadScLevel', 'workType', 'sickConditions', 'idNumber', 'familyCount', 'countLess5', 'countLess18', 'countMore64', 'countMore75', 'countSick', 'idType', 'governorate', 'idSejel'], 'required', 'message' => 'هذه الخانة إجبارية'],
             [['firstName', 'lastName', 'fatherName', 'phone', 'city', 'address', 'status', 'maritalStatus', 'motherName', 'fixNumber', 'idLoc', 'gender', 'familyHeadScLevel', 'workType', 'sickConditions'], 'string'],
             [['idNumber', 'familyCount', 'countLess5', 'countLess18', 'countMore64', 'countMore75', 'countSick'], 'integer'],
-            [['workValue'], 'safe'],
+            [['workValue', 'currency'], 'safe'],
             [['status'], 'default', 'value' => 'قيد التنفيذ'],
             [['familyHead'], 'boolean'],
         ];

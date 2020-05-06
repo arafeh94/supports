@@ -24,7 +24,11 @@ $workTypes = [null, 'عاطل عن العمل', 'مدخول شهري'];
 $marStatus = [null, 'عازب', 'متأهل', 'مطلق', 'ارمل'];
 $scLevels = [null, 'أساسي', 'ثانوي', 'جامعي', 'مهني', 'روضة', 'غيره'];
 $genders = [null, 'ذكر', 'أنثى'];
+$ids = [null, 'هوية', 'إخراج القيد', ' جواز سفر'];
+$govs = [null, 'محافظة جبل لبنان', 'محافظة لبنان الشمالي', 'محافظة لبنان الجنوبي', 'محافظة البقاع', 'محافظة النبطية', 'محافظة بعلبك الهرمل', 'محافظة عكار'];
+$cur = [null, '$', 'LBP'];
 ?>
+
 
 <style>
     .container {
@@ -75,8 +79,8 @@ $genders = [null, 'ذكر', 'أنثى'];
             <td colspan="2" class="section-header">قسم ١ : معلومات شخصية</td>
         </tr>
         <tr>
-            <td><?= $form->field($model, 'firstName')->label('الاسم') ?></td>
-            <td><?= $form->field($model, 'lastName')->label('اسم العائلة') ?></td>
+            <td><?= $form->field($model, 'firstName')->label('الاسم الأول') ?></td>
+            <td><?= $form->field($model, 'lastName')->label('اسم الشهرة') ?></td>
         </tr>
 
         <tr>
@@ -90,15 +94,28 @@ $genders = [null, 'ذكر', 'أنثى'];
         </tr>
 
         <tr>
-            <td colspan="2" class="section-header">قسم ٢ : هوية </td>
-        </tr>
-        <tr>
-            <td><?= $form->field($model, 'idNumber')->label('رقم الهوية') ?></td>
-            <td><?= $form->field($model, 'idNumber')->label('رقم إخراج القيد') ?></td>
+            <td><?= $form->field($model, 'phone')->label('رقم الهاتف الخليوي') ?></td>
+            <td><?= $form->field($model, 'fixNumber')->label('رقم الهاتف الثابت') ?></td>
         </tr>
 
         <tr>
-            <td><?= $form->field($model, 'idNumber')->label('رقم جواز سفر') ?></td>
+            <td colspan="2"><?= $form->field($model, 'address')->label('العنوان')->textarea(['style' => 'resize: none;']) ?></td>
+        </tr>
+
+        <tr>
+            <td><?= $form->field($model, 'idType')->label('نوع الهوية')->dropDownList(array_combine($ids, $ids)); ?></td>
+            <td><?= $form->field($model, 'idNumber')->label('الرقم') ?></td>
+        </tr>
+
+        <tr>
+            <td><?= $form->field($model, 'governorate')->label('محافظة')->dropDownList(array_combine($govs, $govs)); ?></td>
+            <td><?= $form->field($model, 'city')->label('قضاء')->dropDownList(array_combine($kada2s, $kada2s)); ?></td>
+        </tr>
+        <tr>
+            <td><?= $form->field($model, 'idSejel')->label('رقم السجل') ?></td>
+            <td><?= $form->field($model, 'idLoc')->label('مكان السجل') ?></td>
+        </tr>
+        <tr>
             <td><?= $form->field($model, 'birth')->label('تاريخ الميلاد')->widget(DatePicker::classname(), [
                     'options' => ['placeholder' => 'Enter birth date ...'],
                     'removeButton' => false,
@@ -111,7 +128,7 @@ $genders = [null, 'ذكر', 'أنثى'];
         </tr>
 
         <tr>
-            <td colspan="2" class="section-header">قسم ٣ : العائلة</td>
+            <td colspan="2" class="section-header">قسم ٢ : الأسرة</td>
         </tr>
         <tr>
             <td><?= $form->field($model, 'familyHead')->label('هل أنت رب أسرة')->dropDownList([null => '', 1 => 'نعم', 0 => 'كلا']); ?></td>
@@ -139,26 +156,12 @@ $genders = [null, 'ذكر', 'أنثى'];
 
         <tr>
             <td><?= $form->field($model, 'workType')->label('نوع العمل')->dropDownList(array_combine($workTypes, $workTypes)); ?></td>
+        </tr>
+        <tr>
+            <td><?= $form->field($model, 'currency')->label('العملة')->dropDownList(array_combine($cur, $cur)); ?></td>
             <td><?= $form->field($model, 'workValue')->label('قيمة المدخول')->input('number', ['disabled' => true]); ?></td>
         </tr>
 
-
-        <tr>
-            <td colspan="2" class="section-header">قسم ٤ : للتواصل</td>
-        </tr>
-
-        <tr>
-            <td><?= $form->field($model, 'phone')->label('رقم الهاتف الخليوي') ?></td>
-            <td><?= $form->field($model, 'fixNumber')->label('رقم الهاتف الثابت') ?></td>
-        </tr>
-        <tr>
-            <td><?= $form->field($model, 'city')->label('قضاء')->dropDownList(array_combine($kada2s, $kada2s)); ?></td>
-            <td><?= $form->field($model, 'idLoc')->label('مكان السجل') ?></td>
-        </tr>
-
-        <tr>
-            <td colspan="2"><?= $form->field($model, 'address')->label('العنوان')->textarea(['style' => 'resize: none;']) ?></td>
-        </tr>
 
         <tr>
             <td colspan="2" class="section-header">
@@ -185,8 +188,10 @@ $genders = [null, 'ذكر', 'أنثى'];
     function updateProps(value) {
         if (value === 'مدخول شهري') {
             $('#suplist-workvalue').prop("disabled", false);
+            $('#suplist-currency').prop("disabled", false);
         } else {
             $('#suplist-workvalue').prop("disabled", true);
+            $('#suplist-currency').prop("disabled", true);
         }
     }
 
